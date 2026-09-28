@@ -1,0 +1,36 @@
+[
+  {
+    "memory_id": 1,
+    "event_id": "EV001",
+    "event_type": "Technology Conference",
+    "attendance": 3000,
+    "vendor": "AV Solutions",
+    "location": "East Loading Dock",
+    "problem": "AV vendor arrived late",
+    "cause": "Loading dock congestion",
+    "action": "Moved vendor arrival 60 minutes earlier",
+    "outcome": "Successful",
+    "lesson": "For large conferences, AV vendors should arrive at least 60 minutes earlier when loading dock congestion is expected.",
+    "tags": [
+      "AV",
+      "vendor",
+      "loading dock",
+      "late arrival",
+      "technology conference"
+    ]
+  },
+  {
+    "memory_id": 2,
+    "event_id": "EV002",
+    "problem": "AV setup was at risk because the loading dock was congested.",
+    "action": "AV vendor arrived 60 minutes earlier than the original schedule.",
+    "outcome": "Successful",
+    "lesson": "Arriving 60 minutes early prevented AV setup delays during a large technology conference.",
+    "tags": [
+      "eventops",
+      "outcome",
+      "learned-lesson"
+    ],
+    "created_at": "2026-09-28T06:07:33.909268+00:00"
+  }
+]
