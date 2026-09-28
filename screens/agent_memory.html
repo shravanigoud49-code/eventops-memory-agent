@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EventOps — Agent Memory</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        body {
+            font-family: Inter, sans-serif;
+            background: #080b14;
+            color: #e7eaf2;
+        }
+
+        .heading {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .mono {
+            font-family: "JetBrains Mono", monospace;
+        }
+
+        .surface {
+            background: #101522;
+            border: 1px solid #20283a;
+        }
+
+        .surface2 {
+            background: #0d121e;
+            border: 1px solid #1b2333;
+        }
+
+        .memory-card {
+            transition: all 0.2s ease;
+        }
+
+        .memory-card:hover {
+            border-color: #4f46e5;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="min-h-screen">
+
+    <!-- HEADER -->
+    <header class="border-b border-slate-800 bg-[#0a0e18]">
+
+        <div class="max-w-7xl mx-auto px-5 py-4
+                    flex items-center justify-between">
+
+            <div>
+                <div class="heading text-xl font-extrabold">
+                    EVENTOPS
+                </div>
+
+                <div class="text-xs text-slate-500 mt-1">
+                    Operational Intelligence
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+
+                <span
+                    id="statusBadge"
+                    class="px-3 py-1.5 rounded-full
+                           bg-amber-500/10
+                           text-amber-300
+                           border border-amber-500/20
+                           text-xs font-semibold">
+                    Connecting...
+                </span>
+
+                <a
+                    href="../event_hub_connected.html"
+                    class="px-4 py-2 rounded-lg
+                           bg-indigo-600 hover:bg-indigo-500
+                           text-sm font-semibold">
+
+                    Event Hub
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="max-w-7xl mx-auto px-5 py-8">
+
+        <!-- PAGE TITLE -->
+
+        <div class="mb-8">
+
+            <p class="text-indigo-400 text-sm
+                      font-semibold uppercase tracking-widest">
+
+                Agent Memory
+
+            </p>
+
+            <h1 class="heading text-3xl md:text-4xl
+                       font-extrabold mt-2">
+
+                Operational Memory
+
+            </h1>
+
+            <p class="text-slate-400 mt-2 max-w-2xl">
+
+                The EventOps agent remembers previous incidents,
+                actions, outcomes and lessons so future events
+                can benefit from past experience.
+
+            </p>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <section
+            class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+
+            <!-- TOTAL -->
+
+            <div class="surface rounded-2xl p-5">
+
+                <div class="text-xs text-slate-500
+                            uppercase tracking-wider">
+
+                    Total Memories
+
+                </div>
+
+                <div
+                    id="totalMemories"
+                    class="heading text-3xl
+                           font-bold mt-2">
+
+                    —
+
+                </div>
+
+            </div>
+
+
+            <!-- SUCCESS -->
+
+            <div class="surface rounded-2xl p-5">
+
+                <div class="text-xs text-slate-500
+                            uppercase tracking-wider">
+
+                    Successful Outcomes
+
+                </div>
+
+                <div
+                    id="successfulMemories"
+                    class="heading text-3xl
+                           font-bold mt-2">
+
+                    —
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENTS -->
+
+            <div class="surface rounded-2xl p-5">
+
+                <div class="text-xs text-slate-500
+                            uppercase tracking-wider">
+
+                    Events Learned
+
+                </div>
+
+                <div
+                    id="eventsLearned"
+                    class="heading text-3xl
+                           font-bold mt-2">
+
+                    —
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="surface rounded-2xl p-5">
+
+                <div class="text-xs text-slate-500
+                            uppercase tracking-wider">
+
+                    Memory Status
+
+                </div>
+
+                <div
+                    id="memoryStatus"
+                    class="heading text-xl
+                           font-bold mt-3
+                           text-emerald-400">
+
+                    Loading
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LEARNING LOOP -->
+
+        <section class="surface rounded-2xl p-6 mb-8">
+
+            <div class="flex items-center
+                        justify-between mb-6">
+
+                <div>
+
+                    <p class="text-indigo-400 text-xs
+                              uppercase tracking-widest
+                              font-bold">
+
+                        Memory Learning Loop
+
+                    </p>
+
+                    <h2 class="heading text-xl
+                               font-bold mt-1">
+
+                        How EventOps learns
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="grid md:grid-cols-5 gap-3
+                       items-center">
+
+                <div class="surface2 rounded-xl p-4 text-center">
+
+                    <div class="text-indigo-400
+                                font-bold text-lg">
+
+                        01
+
+                    </div>
+
+                    <div class="font-semibold mt-2">
+                        Observe
+                    </div>
+
+                    <div class="text-xs text-slate-500 mt-1">
+                        Event happens
+                    </div>
+
+                </div>
+
+
+                <div class="hidden md:block
+                            text-center text-slate-600">
+
+                    →
+
+                </div>
+
+
+                <div class="surface2 rounded-xl p-4 text-center">
+
+                    <div class="text-violet-400
+                                font-bold text-lg">
+
+                        02
+
+                    </div>
+
+                    <div class="font-semibold mt-2">
+                        Recall
+                    </div>
+
+                    <div class="text-xs text-slate-500 mt-1">
+                        Find similar memory
+                    </div>
+
+                </div>
+
+
+                <div class="hidden md:block
+                            text-center text-slate-600">
+
+                    →
+
+                </div>
+
+
+                <div class="surface2 rounded-xl p-4 text-center">
+
+                    <div class="text-amber-400
+                                font-bold text-lg">
+
+                        03
+
+                    </div>
+
+                    <div class="font-semibold mt-2">
+                        Learn
+                    </div>
+
+                    <div class="text-xs text-slate-500 mt-1">
+                        Store outcome
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="mt-4 text-center text-xs text-slate-500">
+
+                Observe → Recall → Recommend → Outcome → Learn
+
+            </div>
+
+        </section>
+
+
+        <!-- SEARCH -->
+
+        <section class="surface rounded-2xl p-5 mb-8">
+
+            <div
+                class="flex flex-col md:flex-row
+                       md:items-center
+                       justify-between gap-4">
+
+                <div>
+
+                    <h2 class="heading text-lg font-bold">
+
+                        Search Operational Memory
+
+                    </h2>
+
+                    <p class="text-sm text-slate-500 mt-1">
+
+                        Search incidents, vendors,
+                        locations and lessons.
+
+                    </p>
+
+                </div>
+
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search memories..."
+                    class="w-full md:w-96
+                           bg-[#090d16]
+                           border border-slate-700
+                           rounded-xl
+                           px-4 py-3
+                           outline-none
+                           focus:border-indigo-500
+                           text-sm">
+
+            </div>
+
+        </section>
+
+
+        <!-- MEMORY LIST -->
+
+        <section>
+
+            <div
+                class="flex items-center
+                       justify-between mb-4">
+
+                <div>
+
+                    <h2 class="heading text-xl font-bold">
+
+                        Stored Memories
+
+                    </h2>
+
+                    <p
+                        id="resultCount"
+                        class="text-xs text-slate-500 mt-1">
+
+                        Loading...
+
+                    </p>
+
+                </div>
+
+
+                <button
+                    onclick="loadMemories()"
+                    class="px-4 py-2 rounded-lg
+                           border border-slate-700
+                           hover:border-indigo-500
+                           text-xs font-semibold">
+
+                    Refresh
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="memoryList"
+                class="space-y-4">
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+const API_BASE = "http://127.0.0.1:8000";
+
+let allMemories = [];
+
+
+/* =========================
+   BACKEND HEALTH
+========================= */
+
+async function checkHealth() {
+
+    const badge =
+        document.getElementById("statusBadge");
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE}/api/health`
+            );
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+        badge.textContent =
+            "● Backend Online";
+
+        badge.className =
+            "px-3 py-1.5 rounded-full " +
+            "bg-emerald-500/10 " +
+            "text-emerald-300 " +
+            "border border-emerald-500/20 " +
+            "text-xs font-semibold";
+
+        document.getElementById(
+            "memoryStatus"
+        ).textContent = "Online";
+
+    }
+
+    catch {
+
+        badge.textContent =
+            "● Backend Offline";
+
+        badge.className =
+            "px-3 py-1.5 rounded-full " +
+            "bg-red-500/10 " +
+            "text-red-300 " +
+            "border border-red-500/20 " +
+            "text-xs font-semibold";
+
+        document.getElementById(
+            "memoryStatus"
+        ).textContent = "Offline";
+
+    }
+
+}
+
+
+/* =========================
+   LOAD MEMORIES
+========================= */
+
+async function loadMemories() {
+
+    const list =
+        document.getElementById(
+            "memoryList"
+        );
+
+    list.innerHTML = `
+        <div class="surface rounded-2xl
+                    p-8 text-center
+                    text-slate-500">
+
+            Loading operational memories...
+
+        </div>
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE}/api/memories`
+            );
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+        const data =
+            await response.json();
+
+        allMemories =
+            data.memories || [];
+
+        updateStatistics(
+            allMemories
+        );
+
+        renderMemories(
+            allMemories
+        );
+
+    }
+
+    catch {
+
+        list.innerHTML = `
+            <div class="
+                rounded-2xl p-6
+                border border-red-500/20
+                bg-red-500/5
+                text-red-300">
+
+                <div class="font-semibold">
+
+                    Unable to load memories
+
+                </div>
+
+                <div class="text-sm mt-2">
+
+                    Make sure the FastAPI backend
+                    is running on port 8000.
+
+                </div>
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+function updateStatistics(
+    memories
+) {
+
+    document.getElementById(
+        "totalMemories"
+    ).textContent =
+        memories.length;
+
+
+    const successful =
+        memories.filter(memory =>
+            String(
+                memory.outcome || ""
+            )
+            .toLowerCase()
+            .includes("success")
+        ).length;
+
+
+    document.getElementById(
+        "successfulMemories"
+    ).textContent =
+        successful;
+
+
+    const events =
+        new Set(
+            memories
+                .map(
+                    memory =>
+                        memory.event_id
+                )
+                .filter(Boolean)
+        );
+
+
+    document.getElementById(
+        "eventsLearned"
+    ).textContent =
+        events.size;
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderMemories(
+    memories
+) {
+
+    document.getElementById(
+        "resultCount"
+    ).textContent =
+        `${memories.length} memories found`;
+
+
+    const list =
+        document.getElementById(
+            "memoryList"
+        );
+
+
+    if (!memories.length) {
+
+        list.innerHTML = `
+            <div class="surface rounded-2xl
+                        p-8 text-center">
+
+                <div class="text-slate-400
+                            font-semibold">
+
+                    No memories found
+
+                </div>
+
+                <div class="text-slate-600
+                            text-sm mt-2">
+
+                    Record an event outcome
+                    from Event Hub to teach
+                    the agent.
+
+                </div>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML =
+        memories
+        .map(memory => {
+
+            const successful =
+                String(
+                    memory.outcome || ""
+                )
+                .toLowerCase()
+                .includes("success");
+
+
+            return `
+
+            <article
+                class="
+                    memory-card
+                    surface
+                    rounded-2xl
+                    p-6
+                ">
+
+                <div
+                    class="
+                        flex flex-wrap
+                        items-center
+                        justify-between
+                        gap-3
+                    ">
+
+                    <div class="flex
+                                items-center
+                                gap-3">
+
+                        <span
+                            class="
+                                mono
+                                text-xs
+                                px-2.5
+                                py-1
+                                rounded-md
+                                bg-slate-800
+                                text-indigo-300
+                            ">
+
+                            MEMORY-${String(
+                                memory.memory_id || ""
+                            ).padStart(3, "0")}
+
+                        </span>
+
+                        <span
+                            class="
+                                text-xs
+                                text-slate-500
+                            ">
+
+                            ${escapeHtml(
+                                memory.event_id ||
+                                "Unknown event"
+                            )}
+
+                        </span>
+
+                    </div>
+
+
+                    <span
+                        class="
+                            px-2.5
+                            py-1
+                            rounded-full
+                            text-xs
+                            font-semibold
+                            ${
+                                successful
+                                ? "bg-emerald-500/10 text-emerald-300"
+                                : "bg-amber-500/10 text-amber-300"
+                            }
+                        ">
+
+                        ${escapeHtml(
+                            memory.outcome ||
+                            "Recorded"
+                        )}
+
+                    </span>
+
+                </div>
+
+
+                <div class="mt-5">
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            uppercase
+                            tracking-wider
+                        ">
+
+                        Problem / Incident
+
+                    </div>
+
+                    <div
+                        class="
+                            text-sm
+                            text-slate-300
+                            mt-2
+                            leading-6
+                        ">
+
+                        ${escapeHtml(
+                            memory.problem ||
+                            "Not recorded"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="
+                        mt-5
+                        p-4
+                        rounded-xl
+                        bg-slate-900/70
+                        border border-slate-800
+                    ">
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            uppercase
+                            tracking-wider
+                        ">
+
+                        Action Taken
+
+                    </div>
+
+                    <div
+                        class="
+                            text-sm
+                            text-slate-300
+                            mt-2
+                            leading-6
+                        ">
+
+                        ${escapeHtml(
+                            memory.action ||
+                            "Not recorded"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="
+                        mt-4
+                        p-4
+                        rounded-xl
+                        bg-indigo-500/5
+                        border
+                        border-indigo-500/20
+                    ">
+
+                    <div
+                        class="
+                            text-xs
+                            text-indigo-300
+                            uppercase
+                            tracking-wider
+                            font-semibold
+                        ">
+
+                        Lesson Learned
+
+                    </div>
+
+                    <div
+                        class="
+                            text-sm
+                            text-slate-200
+                            mt-2
+                            leading-6
+                        ">
+
+                        ${escapeHtml(
+                            memory.lesson ||
+                            "No lesson recorded"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="
+                        flex flex-wrap
+                        gap-2
+                        mt-4
+                    ">
+
+                    ${
+                        (memory.tags || [])
+                        .map(tag => `
+                            <span
+                                class="
+                                    text-xs
+                                    px-2.5
+                                    py-1
+                                    rounded-full
+                                    bg-slate-800
+                                    text-slate-400
+                                ">
+
+                                #${escapeHtml(tag)}
+
+                            </span>
+                        `)
+                        .join("")
+                    }
+
+                </div>
+
+            </article>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        function () {
+
+            const query =
+                this.value
+                    .trim()
+                    .toLowerCase();
+
+
+            if (!query) {
+
+                renderMemories(
+                    allMemories
+                );
+
+                return;
+
+            }
+
+
+            const filtered =
+                allMemories.filter(
+                    memory => {
+
+                        return JSON
+                            .stringify(memory)
+                            .toLowerCase()
+                            .includes(query);
+
+                    }
+                );
+
+
+            renderMemories(
+                filtered
+            );
+
+        }
+    );
+
+
+/* =========================
+   SECURITY HELPER
+========================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+checkHealth();
+
+loadMemories();
+
+</script>
+
+</body>
+</html>
