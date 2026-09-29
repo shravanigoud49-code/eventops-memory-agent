@@ -366,14 +366,13 @@
 
                     <h2 class="heading text-lg font-bold">
 
-                        Search Operational Memory
+                        Recall Operational Memory
 
                     </h2>
 
                     <p class="text-sm text-slate-500 mt-1">
 
-                        Search incidents, vendors,
-                        locations and lessons.
+                        Query Hindsight for incidents, vendors, locations and lessons.
 
                     </p>
 
@@ -383,7 +382,7 @@
                 <input
                     id="searchInput"
                     type="text"
-                    placeholder="Search memories..."
+                    placeholder="Recall from Hindsight..."
                     class="w-full md:w-96
                            bg-[#090d16]
                            border border-slate-700
@@ -936,53 +935,72 @@ function renderMemories(
 
 
 /* =========================
-   SEARCH
+   HINDSIGHT RECALL SEARCH
 ========================= */
 
-document
-    .getElementById(
-        "searchInput"
-    )
-    .addEventListener(
-        "input",
-        function () {
+let recallTimer = null;
 
-            const query =
-                this.value
-                    .trim()
-                    .toLowerCase();
+async function recallMemories(query) {
+    const list = document.getElementById("memoryList");
+    const resultCount = document.getElementById("resultCount");
 
+    if (!query) {
+        renderMemories(allMemories);
+        return;
+    }
 
-            if (!query) {
+    list.innerHTML = `
+        <div class="surface rounded-2xl p-8 text-center text-slate-500">
+            Querying Hindsight memory...
+        </div>
+    `;
+    resultCount.textContent = "Running Hindsight recall...";
 
-                renderMemories(
-                    allMemories
-                );
+    try {
+        const response = await fetch(`${API_BASE}/api/recall`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query })
+        });
 
-                return;
+        const data = await response.json();
 
-            }
-
-
-            const filtered =
-                allMemories.filter(
-                    memory => {
-
-                        return JSON
-                            .stringify(memory)
-                            .toLowerCase()
-                            .includes(query);
-
-                    }
-                );
-
-
-            renderMemories(
-                filtered
-            );
-
+        if (!response.ok) {
+            throw new Error(data.detail || "Recall failed.");
         }
-    );
+
+        const memories = data.memories || data.results || [];
+        renderMemories(memories);
+        resultCount.textContent =
+            `${memories.length} Hindsight recall result${memories.length === 1 ? "" : "s"}`;
+    } catch (error) {
+        list.innerHTML = `
+            <div class="rounded-2xl p-6 border border-red-500/20 bg-red-500/5 text-red-300">
+                <div class="font-semibold">Hindsight recall unavailable</div>
+                <div class="text-sm mt-2">${escapeHtml(error.message)}</div>
+            </div>
+        `;
+        resultCount.textContent = "Recall request failed";
+        console.error(error);
+    }
+}
+
+document
+    .getElementById("searchInput")
+    .addEventListener("input", function () {
+        const query = this.value.trim();
+
+        clearTimeout(recallTimer);
+
+        if (!query) {
+            renderMemories(allMemories);
+            return;
+        }
+
+        recallTimer = setTimeout(() => {
+            recallMemories(query);
+        }, 450);
+    });
 
 
 /* =========================
